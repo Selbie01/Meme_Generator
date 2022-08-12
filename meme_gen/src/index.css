@@ -27,7 +27,6 @@ main {
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  letter-spacing: -0.1em;
 }
 .subtitle{
   font-family: 'Karla', sans-serif;
@@ -56,4 +55,10 @@ main {
   color: #FFFFFF;
   border: none;
   cursor: pointer;
+}
+.memeImage{
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
