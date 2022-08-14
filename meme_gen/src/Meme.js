@@ -1,5 +1,4 @@
 import React from 'react'
-import memesData from "./MemeData"
 
 export default function Meme(){
 
@@ -8,24 +7,29 @@ export default function Meme(){
     bottomText: "",
     randomImage: "https://i.imgflip.com/30b1gx.jpg"
  })
- const [allMemeImages, setAllMemeImages] = React.useState(memesData)
+ const [allMemes, setAllMemes] = React.useState([])
 
-    function getMemeImage(){
-        const memesArr = allMemeImages.data.memes
-        const randomNum = Math.floor(Math.random() * memesArr.length)
-        const url = memesArr[randomNum].url
-        setMeme(prevMeme => ({
+    React.useEffect(() => {
+        fetch("https://api.imgflip.com/get_memes") // calls api
+            .then(res => res.json()) //parses the response
+            .then(data => setAllMemes(data.data.memes)) // gets all of the available meme's data
+    } , [])
+        
+        function getMemeImage() { //gets a random meme
+        const randomNum = Math.floor(Math.random() * allMemes.length)
+        const url = allMemes[randomNum].url
+        setMeme(prevMeme => ({ //sets a meme to meme.randomImage
             ...prevMeme,
             randomImage: url
         }))
     }
 
     function handleChange(event) {
-        const {name, value} = event.target
+        const {name, value} = event.target //shortens event.target.name and event.target.value
         setMeme(prevMeme => {
             return {
                 ...prevMeme,
-                [name]: value
+                [name]: value // [name] is a computed property syntax. Allows the names of object properties to be determined dynamically, i.e. computed.
             }
         })
     }
